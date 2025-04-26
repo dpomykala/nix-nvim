@@ -35,18 +35,39 @@ https://github.com/olimorris/codecompanion.nvim
             })
           end
         '';
+
+        openrouter.__raw = ''
+          function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              env = {
+                -- TODO: Use 1Password CLI for API keys
+                api_key = vim.env.OPENROUTER_API_KEY,
+                url = "https://openrouter.ai/api",
+              },
+              schema = {
+                model = {
+                  default = "openai/gpt-4.1",
+                  -- default = "openai/gpt-4.1-mini",
+                  -- default = "openai/gpt-4.1-nano",
+                },
+              },
+            })
+          end
+        '';
       };
 
       display.chat.show_settings = true;
 
       strategies = {
-        cmd.adapter = "groq";
+        cmd.adapter = "openrouter";
+
         chat = {
-          adapter = "groq";
+          adapter = "openrouter";
 
           slash_commands.opts.provider = "snacks";
         };
-        inline.adapter = "groq";
+
+        inline.adapter = "openrouter";
       };
     };
   };
