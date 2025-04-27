@@ -1,5 +1,5 @@
 {lib, ...}: {
-  diagnostics = {
+  diagnostic.config = {
     float = {border = "rounded";};
     severity_sort = true;
     signs = {

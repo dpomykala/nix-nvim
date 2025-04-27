@@ -1,3 +1,9 @@
+/*
+flash.nvim - fast navigation and enhanced motions in Neovim.
+
+https://nix-community.github.io/nixvim/plugins/flash
+https://github.com/folke/flash.nvim
+*/
 {lib, ...}: {
   plugins.flash = {
     enable = true;
