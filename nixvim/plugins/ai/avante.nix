@@ -18,27 +18,43 @@ https://github.com/yetone/avante.nvim
       hasSnacksPicker = hasSnacksModule config "picker";
     in
       {
-        behaviour.enable_cursor_planning_mode = true;
+        auto_suggestions_provider = "openrouter_gpt41_mini";
 
-        cursor_applying_provider = "groq_applying";
+        behaviour = {
+          # auto_suggestions = true;
+          enable_cursor_planning_mode = true;
+        };
+
+        cursor_applying_provider = "openrouter";
 
         hints.enabled = false;
 
-        provider = "groq";
+        provider = "openrouter";
 
         vendors = {
           groq = {
             __inherit_from = "openai";
             api_key_name = "GROQ_API_KEY";
             endpoint = "https://api.groq.com/openai/v1/";
+            max_tokens = 32768;
             model = "deepseek-r1-distill-qwen-32b";
             temperature = 0.6;
           };
-          # Used in the Cursor planning mode
-          groq_applying = {
+          groq_llama33 = {
             __inherit_from = "groq";
-            max_tokens = 32768;
             model = "llama-3.3-70b-versatile";
+          };
+
+          openrouter = {
+            __inherit_from = "openai";
+            api_key_name = "OPENROUTER_API_KEY";
+            endpoint = "https://openrouter.ai/api/v1/";
+            max_tokens = 32768;
+            model = "openai/gpt-4.1";
+          };
+          openrouter_gpt41_mini = {
+            __inherit_from = "openrouter";
+            model = "openai/gpt-4.1-mini";
           };
         };
       }
