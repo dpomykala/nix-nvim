@@ -1,3 +1,9 @@
+/*
+persistence.nvim - automated session management for Neovim.
+
+https://nix-community.github.io/nixvim/plugins/persistence
+https://github.com/folke/persistence.nvim
+*/
 {lib, ...}: {
   plugins.persistence.enable = true;
 

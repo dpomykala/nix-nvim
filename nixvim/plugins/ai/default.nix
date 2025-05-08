@@ -1,6 +1,6 @@
 _: {
   imports = [
-    # ./avante.nix
-    ./codecompanion.nix
+    ./avante.nix
+    # ./codecompanion.nix
   ];
 }
