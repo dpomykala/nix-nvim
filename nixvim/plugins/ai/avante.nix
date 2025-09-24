@@ -28,30 +28,29 @@ https://github.com/yetone/avante.nvim
 
         behaviour = {
           # auto_suggestions = true;
-          enable_cursor_planning_mode = true;
         };
-
-        cursor_applying_provider = "openrouter";
-
-        hints.enabled = false;
 
         provider = "openrouter";
 
-        vendors = {
+        providers = {
           groq = {
             __inherited_from = "openai";
             api_key_name = "GROQ_API_KEY";
             endpoint = "https://api.groq.com/openai/v1/";
+            extra_request_body = {
+              temperature = 0.6;
+            };
             max_tokens = 32768;
             model = "deepseek-r1-distill-qwen-32b";
             # model = "llama-3.3-70b-versatile";
-            temperature = 0.6;
           };
 
           openrouter =
             openrouter_params
             // {
-              max_tokens = 32768;
+              extra_request_body = {
+                max_tokens = 32768;
+              };
               model = "openai/gpt-4.1";
             };
           openrouter_gpt41_mini = openrouter_params // {model = "openai/gpt-4.1-mini";};
