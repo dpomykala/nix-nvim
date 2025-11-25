@@ -167,7 +167,7 @@ in {
               '';
             nixvim.expr =
               # Nix
-              "${flake}.packages.${pkgs.system}.nvim.options";
+              "${flake}.packages.${pkgs.stdenv.hostPlatform.system}.nvim.options";
           };
         };
       };

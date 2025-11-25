@@ -4,7 +4,7 @@
     vimPlugins =
       prev.vimPlugins
       // {
-        inherit (inputs.blink-cmp.packages.${prev.system}) blink-cmp;
+        inherit (inputs.blink-cmp.packages.${prev.stdenv.hostPlatform.system}) blink-cmp;
       };
   };
 
@@ -54,6 +54,6 @@
   };
 
   neovim-nightly = final: prev: {
-    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${prev.system}.default;
+    neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
   };
 }
