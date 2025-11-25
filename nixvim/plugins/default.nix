@@ -13,6 +13,7 @@ _: {
     ./mini
     ./noice.nix
     ./persistence.nix
+    ./quicker.nix
     ./render-markdown.nix
     ./snacks
     ./todo-comments.nix
