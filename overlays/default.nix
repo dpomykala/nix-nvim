@@ -40,6 +40,7 @@
             "snacks.picker.core.list"
             "snacks.picker.source.gh"
             "snacks.picker.util.db"
+            "snacks.picker.util.diff"
             "snacks.scratch"
             "snacks.scroll"
             "snacks.terminal"
