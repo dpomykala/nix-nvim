@@ -7,7 +7,8 @@
   inherit (lib.custom.nixvim) nCmdMap nxCmdMap;
 in {
   plugins.conform-nvim = {
-    enable = true;
+    # FIXME: Currently broken?
+    enable = false;
 
     settings = {
       default_format_opts = {
