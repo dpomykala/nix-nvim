@@ -1,13 +1,4 @@
 {inputs}: {
-  # The latest version of blink.cmp from the main branch
-  blink-cmp-main = final: prev: {
-    vimPlugins =
-      prev.vimPlugins
-      // {
-        inherit (inputs.blink-cmp.packages.${prev.stdenv.hostPlatform.system}) blink-cmp;
-      };
-  };
-
   # The latest version of snacks.nvim from the main branch
   snacks-nvim-main = final: prev: {
     vimPlugins =

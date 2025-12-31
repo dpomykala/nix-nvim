@@ -7,11 +7,6 @@
     nixvim.url = "github:nix-community/nixvim";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-    # Neovim plugins
-    blink-cmp = {
-      url = "github:Saghen/blink.cmp";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     snacks-nvim = {
       url = "github:folke/snacks.nvim";
       flake = false;
