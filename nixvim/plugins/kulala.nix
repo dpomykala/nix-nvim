@@ -8,8 +8,7 @@ TODO: Use also kulala-fmt and kulala-ls?
 */
 {pkgs, ...}: {
   plugins.kulala = {
-    # FIXME: Currently broken?
-    enable = false;
+    enable = true;
 
     settings = {
       global_keymaps = true;

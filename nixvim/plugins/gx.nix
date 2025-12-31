@@ -6,8 +6,7 @@ https://github.com/chrishrb/gx.nvim
 */
 {lib, ...}: {
   plugins.gx = {
-    # FIXME: Currently broken?
-    enable = false;
+    enable = true;
 
     settings.handler_options.search_engine = "duckduckgo";
   };
