@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{config, ...}: {
   imports = [
     ./context.nix
     ./textobjects.nix
@@ -6,8 +6,6 @@
 
   plugins.treesitter = {
     enable = true;
-
-    nixvimInjections = true;
 
     settings = {
       highlight.enable = true;
@@ -25,7 +23,7 @@
       indent.enable = true;
     };
 
-    grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
       bash
       css
       csv
@@ -37,7 +35,6 @@
       http
       javascript
       json
-      jsonc
       just
       lua
       make
