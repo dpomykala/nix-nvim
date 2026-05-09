@@ -53,7 +53,7 @@ in {
   extraPackages = with pkgs; [
     alejandra
     just
-    nodePackages.prettier
+    prettier
     shellcheck
     shfmt
     stylua
