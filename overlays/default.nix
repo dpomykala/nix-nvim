@@ -47,4 +47,14 @@
   neovim-nightly = final: prev: {
     neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${prev.stdenv.hostPlatform.system}.default;
   };
+
+  # Temporary workaround: statix tests fail due to outdated snapshot tests
+  # (collapsible_let_in rule). The upstream rnix output format has changed and
+  # the snapshots haven't been updated yet. Disable tests until upstream fixes it.
+  # TODO: Remove this overlay once statix builds successfully with tests enabled
+  statix-skip-tests = final: prev: {
+    statix = prev.statix.overrideAttrs (old: {
+      doCheck = false;
+    });
+  };
 }

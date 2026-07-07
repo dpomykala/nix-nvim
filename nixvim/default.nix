@@ -12,5 +12,6 @@
   nixpkgs.overlays = [
     self.overlays.neovim-nightly
     self.overlays.snacks-nvim-main
+    self.overlays.statix-skip-tests # Temporary: skip statix broken tests
   ];
 }
