@@ -3,10 +3,7 @@ _: {
   files = {
     "after/ftplugin/gitcommit.lua" = {
       localOpts = {
-        colorcolumn = [
-          51
-          73
-        ];
+        colorcolumn = "51,73";
         spell = true;
         textwidth = 72;
       };
