@@ -53,14 +53,14 @@
     in {
       default = pkgs.mkShellNoCC {
         packages = with pkgs; [
-          alejandra
           just
+          nixfmt-tree
         ];
       };
     });
 
     # Format Nix files with `nix fmt .`
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
     # Export custom overlays
     overlays = import ./overlays {inherit inputs;};
