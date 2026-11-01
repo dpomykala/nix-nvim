@@ -1,12 +1,12 @@
 /*
-kulala.nvim - A fully-featured REST Client Interface for Neovim.
+  kulala.nvim - A fully-featured REST Client Interface for Neovim.
 
-https://nix-community.github.io/nixvim/plugins/kulala/
-https://github.com/mistweaverco/kulala.nvim
+  https://nix-community.github.io/nixvim/plugins/kulala/
+  https://github.com/mistweaverco/kulala.nvim
 
-TODO: Use also kulala-fmt and kulala-ls?
+  TODO: Use also kulala-fmt and kulala-ls?
 */
-{pkgs, ...}: {
+{ pkgs, ... }: {
   plugins.kulala = {
     enable = true;
 

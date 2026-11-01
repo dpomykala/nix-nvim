@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   colorschemes.catppuccin = {
     enable = true;
 
@@ -10,7 +11,7 @@
       flavour = "macchiato";
 
       integrations = lib.mkMerge [
-        (lib.mkIf config.plugins.grug-far.enable {grug_far = true;})
+        (lib.mkIf config.plugins.grug-far.enable { grug_far = true; })
 
         # TODO: Remove when the default value is changed as below
         (lib.mkIf config.plugins.mini.enable {
@@ -21,7 +22,7 @@
         })
 
         # TODO: Remove when the default value is changed to true
-        (lib.mkIf config.plugins.noice.enable {noice = true;})
+        (lib.mkIf config.plugins.noice.enable { noice = true; })
 
         # TODO: Remove when the default value is changed to true
         (lib.mkIf config.plugins.snacks.enable {

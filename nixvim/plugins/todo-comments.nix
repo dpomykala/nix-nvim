@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   plugins.todo-comments = {
     enable = true;
 
@@ -13,11 +14,12 @@
 
   # TODO: Add keymaps for :TodoQuickFix and :TodoLocList
   # TODO: Add keymaps for next/prev TODO?
-  keymaps = let
-    inherit (lib.custom.nixvim) hasSnacksModule nCmdMap;
+  keymaps =
+    let
+      inherit (lib.custom.nixvim) hasSnacksModule nCmdMap;
 
-    hasSnacksPicker = hasSnacksModule config "picker";
-  in
+      hasSnacksPicker = hasSnacksModule config "picker";
+    in
     lib.optionals hasSnacksPicker [
       (nCmdMap {
         key = "<Leader>fT";

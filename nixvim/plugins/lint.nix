@@ -2,7 +2,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   plugins.lint = {
     enable = true;
 
@@ -17,7 +18,7 @@
     '';
 
     lintersByFt = {
-      nix = ["statix"];
+      nix = [ "statix" ];
     };
   };
 
@@ -25,25 +26,27 @@
     statix
   ];
 
-  keymaps = let
-    inherit (lib.custom.nixvim) nCmdMap;
-  in [
-    (nCmdMap {
-      key = "<Leader>cl";
-      cmd = "lua require('lint').try_lint()";
-      desc = "Lint file";
-    })
-    (nCmdMap {
-      key = "\\A";
-      cmd = "AutolintToggle";
-      desc = "Toggle linting";
-    })
-    (nCmdMap {
-      key = "\\a";
-      cmd = "AutolintBufferToggle";
-      desc = "Toggle linting (buffer)";
-    })
-  ];
+  keymaps =
+    let
+      inherit (lib.custom.nixvim) nCmdMap;
+    in
+    [
+      (nCmdMap {
+        key = "<Leader>cl";
+        cmd = "lua require('lint').try_lint()";
+        desc = "Lint file";
+      })
+      (nCmdMap {
+        key = "\\A";
+        cmd = "AutolintToggle";
+        desc = "Toggle linting";
+      })
+      (nCmdMap {
+        key = "\\a";
+        cmd = "AutolintBufferToggle";
+        desc = "Toggle linting (buffer)";
+      })
+    ];
 
   userCommands = {
     AutolintToggle = {

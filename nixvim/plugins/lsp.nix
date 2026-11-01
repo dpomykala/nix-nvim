@@ -4,131 +4,134 @@
   pkgs,
   self,
   ...
-}: let
+}:
+let
   inherit (lib.custom.nixvim) hasSnacksModule nCmdMap;
 
   hasSnacksPicker = hasSnacksModule config "picker";
-in {
+in
+{
   plugins.lsp = {
     enable = true;
 
     inlayHints = true;
 
     keymaps = {
-      extra =
-        [
-          # Language servers mappings
-          (nCmdMap {
-            key = "<Leader>ll";
-            cmd = "LspLog";
-            desc = "LS logs";
-          })
-          (nCmdMap {
-            key = "<Leader>lr";
-            cmd = "LspRestart";
-            desc = "LS restart";
-          })
-          (nCmdMap {
-            key = "<Leader>lS";
-            cmd = "LspStop";
-            desc = "LS stop";
-          })
-        ]
-        ++ lib.optionals hasSnacksPicker [
-          (nCmdMap {
-            key = "gD";
-            cmd = "lua Snacks.picker.lsp_declarations()";
-            desc = "Goto declaration (LSP)";
-          })
-          (nCmdMap {
-            key = "gd";
-            cmd = "lua Snacks.picker.lsp_definitions()";
-            desc = "Goto definition (LSP)";
-          })
-          (nCmdMap {
-            key = "gli";
-            cmd = "lua Snacks.picker.lsp_implementations()";
-            desc = "Goto implementation";
-          })
-          (nCmdMap {
-            key = "glr";
-            cmd = "lua Snacks.picker.lsp_references()";
-            desc = "References";
-          })
-          (nCmdMap {
-            key = "glS";
-            cmd = "lua Snacks.picker.lsp_workspace_symbols()";
-            desc = "Symbols (workspace)";
-          })
-          (nCmdMap {
-            key = "gls";
-            cmd = "lua Snacks.picker.lsp_symbols()";
-            desc = "Symbols (buffer)";
-          })
-          (nCmdMap {
-            key = "glt";
-            cmd = "lua Snacks.picker.lsp_type_definitions()";
-            desc = "Goto type definition";
-          })
-        ];
+      extra = [
+        # Language servers mappings
+        (nCmdMap {
+          key = "<Leader>ll";
+          cmd = "LspLog";
+          desc = "LS logs";
+        })
+        (nCmdMap {
+          key = "<Leader>lr";
+          cmd = "LspRestart";
+          desc = "LS restart";
+        })
+        (nCmdMap {
+          key = "<Leader>lS";
+          cmd = "LspStop";
+          desc = "LS stop";
+        })
+      ]
+      ++ lib.optionals hasSnacksPicker [
+        (nCmdMap {
+          key = "gD";
+          cmd = "lua Snacks.picker.lsp_declarations()";
+          desc = "Goto declaration (LSP)";
+        })
+        (nCmdMap {
+          key = "gd";
+          cmd = "lua Snacks.picker.lsp_definitions()";
+          desc = "Goto definition (LSP)";
+        })
+        (nCmdMap {
+          key = "gli";
+          cmd = "lua Snacks.picker.lsp_implementations()";
+          desc = "Goto implementation";
+        })
+        (nCmdMap {
+          key = "glr";
+          cmd = "lua Snacks.picker.lsp_references()";
+          desc = "References";
+        })
+        (nCmdMap {
+          key = "glS";
+          cmd = "lua Snacks.picker.lsp_workspace_symbols()";
+          desc = "Symbols (workspace)";
+        })
+        (nCmdMap {
+          key = "gls";
+          cmd = "lua Snacks.picker.lsp_symbols()";
+          desc = "Symbols (buffer)";
+        })
+        (nCmdMap {
+          key = "glt";
+          cmd = "lua Snacks.picker.lsp_type_definitions()";
+          desc = "Goto type definition";
+        })
+      ];
 
-      lspBuf =
-        {
-          # Use signature mappings consistent with `K` for the `hover` action
-          gK = {
-            action = "signature_help";
-            desc = "Signature help (LSP)";
-          };
-          "<C-k>" = {
-            mode = "i";
-            action = "signature_help";
-            desc = "Signature help (LSP)";
-          };
-
-          gla = {
-            action = "code_action";
-            desc = "Actions";
-          };
-          glf = {
-            mode = ["n" "x"];
-            action = "format";
-            desc = "Format file/range (LSP)";
-          };
-          glR = {
-            action = "rename";
-            desc = "Rename";
-          };
-        }
-        // lib.optionalAttrs (!hasSnacksPicker) {
-          gD = {
-            action = "declaration";
-            desc = "Goto declaration (LSP)";
-          };
-          gd = {
-            action = "definition";
-            desc = "Goto definition (LSP)";
-          };
-          gli = {
-            action = "implementation";
-            desc = "Goto implementation";
-          };
-          glr = {
-            action = "references";
-            desc = "References";
-          };
-          glS = {
-            action = "workspace_symbol";
-            desc = "Symbols (workspace)";
-          };
-          gls = {
-            action = "document_symbol";
-            desc = "Symbols (buffer)";
-          };
-          glt = {
-            action = "type_definition";
-            desc = "Goto type definition";
-          };
+      lspBuf = {
+        # Use signature mappings consistent with `K` for the `hover` action
+        gK = {
+          action = "signature_help";
+          desc = "Signature help (LSP)";
         };
+        "<C-k>" = {
+          mode = "i";
+          action = "signature_help";
+          desc = "Signature help (LSP)";
+        };
+
+        gla = {
+          action = "code_action";
+          desc = "Actions";
+        };
+        glf = {
+          mode = [
+            "n"
+            "x"
+          ];
+          action = "format";
+          desc = "Format file/range (LSP)";
+        };
+        glR = {
+          action = "rename";
+          desc = "Rename";
+        };
+      }
+      // lib.optionalAttrs (!hasSnacksPicker) {
+        gD = {
+          action = "declaration";
+          desc = "Goto declaration (LSP)";
+        };
+        gd = {
+          action = "definition";
+          desc = "Goto definition (LSP)";
+        };
+        gli = {
+          action = "implementation";
+          desc = "Goto implementation";
+        };
+        glr = {
+          action = "references";
+          desc = "References";
+        };
+        glS = {
+          action = "workspace_symbol";
+          desc = "Symbols (workspace)";
+        };
+        gls = {
+          action = "document_symbol";
+          desc = "Symbols (buffer)";
+        };
+        glt = {
+          action = "type_definition";
+          desc = "Goto type definition";
+        };
+      };
 
       silent = true;
     };
@@ -143,33 +146,35 @@ in {
       nixd = {
         enable = true;
 
-        settings = let
-          flake =
-            # Nix
-            ''(builtins.getFlake "${self}")'';
-        in {
-          formatting.command = ["alejandra"];
-          nixpkgs.expr =
-            # Nix
-            "import ${flake}.inputs.nixpkgs {}";
-          options = {
-            home-manager.expr =
+        settings =
+          let
+            flake =
               # Nix
-              ''
-                let configs = ${flake}.homeConfigurations;
-                in (builtins.head (builtins.attrValues configs)).options
-              '';
-            nix-darwin.expr =
+              ''(builtins.getFlake "${self}")'';
+          in
+          {
+            formatting.command = [ "alejandra" ];
+            nixpkgs.expr =
               # Nix
-              ''
-                let configs = ${flake}.darwinConfigurations;
-                in (builtins.head (builtins.attrValues configs)).options
-              '';
-            nixvim.expr =
-              # Nix
-              "${flake}.packages.${pkgs.stdenv.hostPlatform.system}.nvim.options";
+              "import ${flake}.inputs.nixpkgs {}";
+            options = {
+              home-manager.expr =
+                # Nix
+                ''
+                  let configs = ${flake}.homeConfigurations;
+                  in (builtins.head (builtins.attrValues configs)).options
+                '';
+              nix-darwin.expr =
+                # Nix
+                ''
+                  let configs = ${flake}.darwinConfigurations;
+                  in (builtins.head (builtins.attrValues configs)).options
+                '';
+              nixvim.expr =
+                # Nix
+                "${flake}.packages.${pkgs.stdenv.hostPlatform.system}.nvim.options";
+            };
           };
-        };
       };
 
       pyright = {

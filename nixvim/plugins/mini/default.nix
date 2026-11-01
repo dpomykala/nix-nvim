@@ -22,14 +22,14 @@ _: {
     mockDevIcons = true;
 
     modules = {
-      align = {};
-      bracketed = {};
-      cursorword = {};
-      files = {};
-      move = {};
-      pairs = {};
-      splitjoin = {};
-      tabline = {};
+      align = { };
+      bracketed = { };
+      cursorword = { };
+      files = { };
+      move = { };
+      pairs = { };
+      splitjoin = { };
+      tabline = { };
     };
   };
 }

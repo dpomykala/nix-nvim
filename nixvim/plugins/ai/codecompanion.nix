@@ -1,14 +1,15 @@
 /*
-CodeCompanion - AI-powered coding, seamlessly in Neovim.
+  CodeCompanion - AI-powered coding, seamlessly in Neovim.
 
-https://nix-community.github.io/nixvim/plugins/codecompanion
-https://github.com/olimorris/codecompanion.nvim
+  https://nix-community.github.io/nixvim/plugins/codecompanion
+  https://github.com/olimorris/codecompanion.nvim
 */
 {
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   plugins.codecompanion = {
     enable = true;
 
@@ -72,30 +73,32 @@ https://github.com/olimorris/codecompanion.nvim
     };
   };
 
-  extraPackages = with pkgs; [curl];
+  extraPackages = with pkgs; [ curl ];
 
-  keymaps = let
-    inherit (lib.custom.nixvim) nxCmdMap xCmdMap;
-  in [
-    (nxCmdMap {
-      key = "<Leader>aa";
-      cmd = "CodeCompanionActions";
-      desc = "Action palette";
-    })
-    (nxCmdMap {
-      key = "<Leader>ac";
-      cmd = "CodeCompanionChat";
-      desc = "Create chat";
-    })
-    (nxCmdMap {
-      key = "<Leader>at";
-      cmd = "CodeCompanionChat Toggle";
-      desc = "Toggle chat";
-    })
-    (xCmdMap {
-      key = "<Leader>ay";
-      cmd = "CodeCompanionChat Add";
-      desc = "Yank to chat";
-    })
-  ];
+  keymaps =
+    let
+      inherit (lib.custom.nixvim) nxCmdMap xCmdMap;
+    in
+    [
+      (nxCmdMap {
+        key = "<Leader>aa";
+        cmd = "CodeCompanionActions";
+        desc = "Action palette";
+      })
+      (nxCmdMap {
+        key = "<Leader>ac";
+        cmd = "CodeCompanionChat";
+        desc = "Create chat";
+      })
+      (nxCmdMap {
+        key = "<Leader>at";
+        cmd = "CodeCompanionChat Toggle";
+        desc = "Toggle chat";
+      })
+      (xCmdMap {
+        key = "<Leader>ay";
+        cmd = "CodeCompanionChat Add";
+        desc = "Yank to chat";
+      })
+    ];
 }

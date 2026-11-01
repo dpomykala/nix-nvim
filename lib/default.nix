@@ -1,3 +1,3 @@
-{lib}: {
-  nixvim = import ./nixvim.nix {inherit lib;};
+{ lib }: {
+  nixvim = import ./nixvim.nix { inherit lib; };
 }

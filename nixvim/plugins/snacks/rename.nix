@@ -1,4 +1,4 @@
-{lib, ...}: {
+{ lib, ... }: {
   plugins.snacks.settings.rename.enable = true;
 
   autoCmd = [
@@ -13,13 +13,15 @@
     }
   ];
 
-  keymaps = let
-    inherit (lib.custom.nixvim) nCmdMap;
-  in [
-    (nCmdMap {
-      key = "<Leader>er";
-      cmd = "lua Snacks.rename.rename_file()";
-      desc = "Rename current file";
-    })
-  ];
+  keymaps =
+    let
+      inherit (lib.custom.nixvim) nCmdMap;
+    in
+    [
+      (nCmdMap {
+        key = "<Leader>er";
+        cmd = "lua Snacks.rename.rename_file()";
+        desc = "Rename current file";
+      })
+    ];
 }

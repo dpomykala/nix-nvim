@@ -2,10 +2,12 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) genAttrs;
   inherit (lib.custom.nixvim) nCmdMap nxCmdMap;
-in {
+in
+{
   plugins.conform-nvim = {
     enable = true;
 
@@ -27,26 +29,28 @@ in {
       '';
 
       # NOTE: LSP formatting is used for some languages (e.g. Python)
-      formatters_by_ft =
-        {
-          just = ["just"];
-          lua = ["stylua"];
-          nix = ["alejandra"];
-        }
-        # File types formatted using prettier
-        // genAttrs [
-          "css"
-          "html"
-          "javascript"
-          "javascriptreact"
-          "json"
-          "markdown"
-          "typescript"
-          "typescriptreact"
-          "yaml"
-        ] (_: ["prettier"])
-        # File types formatted using shellcheck and sh (shfmt)
-        // genAttrs ["bash" "sh"] (_: ["shellcheck" "shfmt"]);
+      formatters_by_ft = {
+        just = [ "just" ];
+        lua = [ "stylua" ];
+        nix = [ "alejandra" ];
+      }
+      # File types formatted using prettier
+      // genAttrs [
+        "css"
+        "html"
+        "javascript"
+        "javascriptreact"
+        "json"
+        "markdown"
+        "typescript"
+        "typescriptreact"
+        "yaml"
+      ] (_: [ "prettier" ])
+      # File types formatted using shellcheck and sh (shfmt)
+      // genAttrs [ "bash" "sh" ] (_: [
+        "shellcheck"
+        "shfmt"
+      ]);
     };
   };
 

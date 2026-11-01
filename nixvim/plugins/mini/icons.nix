@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   plugins.mini.modules.icons = {
     file = {
       ".keep" = {
@@ -12,8 +13,8 @@
     };
 
     filetype = {
-      "text.kulala_ui" = lib.mkIf config.plugins.kulala.enable {glyph = "🐼";};
-      "codecompanion" = lib.mkIf config.plugins.codecompanion.enable {glyph = " ";};
+      "text.kulala_ui" = lib.mkIf config.plugins.kulala.enable { glyph = "🐼"; };
+      "codecompanion" = lib.mkIf config.plugins.codecompanion.enable { glyph = " "; };
     };
   };
 }

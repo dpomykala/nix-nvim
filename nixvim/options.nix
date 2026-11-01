@@ -139,11 +139,11 @@ _: {
     # Enable the mouse for all available modes
     mouse = "a";
     /*
-    Disable the following:
-    - c - messages displayed when using the insert completion menu
-    - I - the intro message displayed when starting (Neo)Vim
-    - s - messages displayed when wrapping search results
-    - W - messages displayed when writing a file
+      Disable the following:
+      - c - messages displayed when using the insert completion menu
+      - I - the intro message displayed when starting (Neo)Vim
+      - s - messages displayed when wrapping search results
+      - W - messages displayed when writing a file
     */
     shortmess.__raw = "vim.opt.shortmess:append('cIsW')";
     # Set how long (in ms) to wait for a mapped sequence (default is 1000)
@@ -154,4 +154,3 @@ _: {
   };
 }
 # vim: foldmethod=marker
-

@@ -13,56 +13,69 @@
     };
   };
 
-  outputs = inputs @ {
-    nixpkgs,
-    nixvim,
-    self,
-    ...
-  }: let
-    supportedSystems = ["aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
-    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+  outputs =
+    inputs@{
+      nixpkgs,
+      nixvim,
+      self,
+      ...
+    }:
+    let
+      supportedSystems = [
+        "aarch64-darwin"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
-    # Extend the default lib with custom functions
-    lib = nixpkgs.lib.extend (final: prev: {
-      custom = import ./lib {lib = final;};
-    });
-    # Extend the lib used for NixVim with the default NixVim lib
-    libForNixvim = lib.extend nixvim.lib.overlay;
-  in {
-    packages = forAllSystems (system: {
-      # Run NixVim as the default program for this flake with `nix run`
-      default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-        inherit system;
+      # Extend the default lib with custom functions
+      lib = nixpkgs.lib.extend (
+        final: prev: {
+          custom = import ./lib { lib = final; };
+        }
+      );
+      # Extend the lib used for NixVim with the default NixVim lib
+      libForNixvim = lib.extend nixvim.lib.overlay;
+    in
+    {
+      packages = forAllSystems (system: {
+        # Run NixVim as the default program for this flake with `nix run`
+        default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+          inherit system;
 
-        extraSpecialArgs = {
-          inherit self;
+          extraSpecialArgs = {
+            inherit self;
 
-          # Use the custom (extended) lib
-          lib = libForNixvim;
+            # Use the custom (extended) lib
+            lib = libForNixvim;
+          };
+
+          module = import ./nixvim;
         };
+      });
 
-        module = import ./nixvim;
-      };
-    });
+      # TODO: Add checks for NixVim?
 
-    # TODO: Add checks for NixVim?
+      # Run development environment with `nix develop`
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShellNoCC {
+            packages = with pkgs; [
+              just
+              nixfmt-tree
+            ];
+          };
+        }
+      );
 
-    # Run development environment with `nix develop`
-    devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = pkgs.mkShellNoCC {
-        packages = with pkgs; [
-          just
-          nixfmt-tree
-        ];
-      };
-    });
+      # Format Nix files with `nix fmt .`
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
-    # Format Nix files with `nix fmt .`
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
-
-    # Export custom overlays
-    overlays = import ./overlays {inherit inputs;};
-  };
+      # Export custom overlays
+      overlays = import ./overlays { inherit inputs; };
+    };
 }

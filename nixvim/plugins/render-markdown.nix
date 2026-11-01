@@ -1,8 +1,8 @@
 /*
-render-markdown.nvim - Plugin to improve viewing Markdown files in Neovim.
+  render-markdown.nvim - Plugin to improve viewing Markdown files in Neovim.
 
-https://nix-community.github.io/nixvim/plugins/render-markdown
-https://github.com/MeanderingProgrammer/render-markdown.nvim
+  https://nix-community.github.io/nixvim/plugins/render-markdown
+  https://github.com/MeanderingProgrammer/render-markdown.nvim
 */
 _: {
   plugins.render-markdown = {
@@ -11,7 +11,11 @@ _: {
     settings = {
       completions.lsp.enabled = true;
 
-      file_types = ["Avante" "codecompanion" "markdown"];
+      file_types = [
+        "Avante"
+        "codecompanion"
+        "markdown"
+      ];
     };
   };
 }

@@ -1,11 +1,12 @@
-/*
-Custom ftplugins with configuration for specific file types.
-*/
+# Custom ftplugins with configuration for specific file types.
 _: {
   files = {
     "after/ftplugin/gitcommit.lua" = {
       localOpts = {
-        colorcolumn = [51 73];
+        colorcolumn = [
+          51
+          73
+        ];
         spell = true;
         textwidth = 72;
       };

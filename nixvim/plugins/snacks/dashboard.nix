@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   plugins.snacks.settings.dashboard = {
     enabled = true;
 
@@ -32,11 +33,12 @@
         "                     =:                     "
       ];
 
-      keys = let
-        inherit (lib.custom.nixvim) hasSnacksModule;
+      keys =
+        let
+          inherit (lib.custom.nixvim) hasSnacksModule;
 
-        hasSnacksLazygit = hasSnacksModule config "lazygit";
-      in
+          hasSnacksLazygit = hasSnacksModule config "lazygit";
+        in
         lib.optionals config.plugins.persistence.enable [
           {
             icon = " ";
@@ -91,9 +93,9 @@
         ];
     };
 
-    sections = let
-      projectsSection =
-        {
+    sections =
+      let
+        projectsSection = {
           icon = " ";
           title = "Projects";
           section = "projects";
@@ -122,20 +124,21 @@
             end
           '';
         };
-    in [
-      {section = "header";}
-      {
-        section = "keys";
-        gap = 1;
-        padding = 2;
-      }
-      {
-        icon = " ";
-        title = "Recent Files";
-        section = "recent_files";
-        padding = 1;
-      }
-      projectsSection
-    ];
+      in
+      [
+        { section = "header"; }
+        {
+          section = "keys";
+          gap = 1;
+          padding = 2;
+        }
+        {
+          icon = " ";
+          title = "Recent Files";
+          section = "recent_files";
+          padding = 1;
+        }
+        projectsSection
+      ];
   };
 }

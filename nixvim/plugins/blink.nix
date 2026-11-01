@@ -1,15 +1,16 @@
 /*
-blink.cmp - performant, batteries-included completion plugin.
+  blink.cmp - performant, batteries-included completion plugin.
 
-https://nix-community.github.io/nixvim/plugins/blink-cmp
-https://github.com/Saghen/blink.cmp
+  https://nix-community.github.io/nixvim/plugins/blink-cmp
+  https://github.com/Saghen/blink.cmp
 */
 {
   config,
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   plugins.blink-cmp = {
     enable = true;
 
@@ -22,24 +23,22 @@ https://github.com/Saghen/blink.cmp
         list.selection.auto_insert = false;
 
         # TODO: Use colorful-menu.nvim instead?
-        menu.draw.treesitter = ["lsp"];
+        menu.draw.treesitter = [ "lsp" ];
       };
 
       signature.enabled = true;
 
       sources = {
-        default =
-          lib.optional config.plugins.avante.enable "avante"
-          ++ [
-            "lsp"
-            "path"
-            "snippets"
-            "buffer"
-          ];
+        default = lib.optional config.plugins.avante.enable "avante" ++ [
+          "lsp"
+          "path"
+          "snippets"
+          "buffer"
+        ];
 
         per_filetype = {
           # Provided by codecompanion.nvim
-          codecompanion = ["codecompanion"];
+          codecompanion = [ "codecompanion" ];
         };
 
         providers = {

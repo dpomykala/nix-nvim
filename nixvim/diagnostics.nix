@@ -1,6 +1,8 @@
-{lib, ...}: {
+{ lib, ... }: {
   diagnostic.settings = {
-    float = {border = "rounded";};
+    float = {
+      border = "rounded";
+    };
     severity_sort = true;
     signs = {
       text = lib.nixvim.toRawKeys {

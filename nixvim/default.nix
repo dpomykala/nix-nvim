@@ -1,4 +1,4 @@
-{self, ...}: {
+{ self, ... }: {
   imports = [
     ./colorschemes.nix
     ./diagnostics.nix

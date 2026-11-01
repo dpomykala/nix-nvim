@@ -1,6 +1,4 @@
-/*
-POC
-*/
+# POC
 _: {
   plugins.hydra = {
     enable = false;
@@ -12,17 +10,17 @@ _: {
           [
             "b"
             "<Cmd>lua MiniBracketed.buffer('backward')<CR>"
-            {desc = "  Buffer backward";}
+            { desc = "  Buffer backward"; }
           ]
           [
             "c"
             "<Cmd>lua MiniBracketed.comment('backward')<CR>"
-            {desc = "  Comment backward";}
+            { desc = "  Comment backward"; }
           ]
           [
             "w"
             "<Cmd>lua MiniBracketed.window('backward')<CR>"
-            {desc = "  Window backward";}
+            { desc = "  Window backward"; }
           ]
         ];
         mode = "n";
@@ -33,17 +31,17 @@ _: {
           [
             "b"
             "<Cmd>lua MiniBracketed.buffer('forward')<CR>"
-            {desc = "  Buffer forward";}
+            { desc = "  Buffer forward"; }
           ]
           [
             "c"
             "<Cmd>lua MiniBracketed.comment('forward')<CR>"
-            {desc = "  Comment forward";}
+            { desc = "  Comment forward"; }
           ]
           [
             "w"
             "<Cmd>lua MiniBracketed.window('forward')<CR>"
-            {desc = "  Window forward";}
+            { desc = "  Window forward"; }
           ]
         ];
         mode = "n";
