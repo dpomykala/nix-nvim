@@ -89,14 +89,6 @@ in
           action = "code_action";
           desc = "Actions";
         };
-        glf = {
-          mode = [
-            "n"
-            "x"
-          ];
-          action = "format";
-          desc = "Format file/range (LSP)";
-        };
         glR = {
           action = "rename";
           desc = "Rename";
@@ -136,90 +128,142 @@ in
       silent = true;
     };
 
-    servers = {
-      html.enable = true;
-
-      jsonls.enable = true;
-
-      lua_ls.enable = true;
-
-      nixd = {
-        enable = true;
-
-        settings =
-          let
-            flake =
-              # Nix
-              ''(builtins.getFlake "${self}")'';
-          in
+    # Prefer the servers on PATH, such as the ones from a dev shell, and use
+    # the bundled ones only when they are missing
+    servers =
+      lib.mapAttrs
+        (
+          _: server:
           {
-            formatting.command = [ "alejandra" ];
-            nixpkgs.expr =
-              # Nix
-              "import ${flake}.inputs.nixpkgs {}";
-            options = {
-              home-manager.expr =
-                # Nix
-                ''
-                  let configs = ${flake}.homeConfigurations;
-                  in (builtins.head (builtins.attrValues configs)).options
-                '';
-              nix-darwin.expr =
-                # Nix
-                ''
-                  let configs = ${flake}.darwinConfigurations;
-                  in (builtins.head (builtins.attrValues configs)).options
-                '';
-              nixvim.expr =
-                # Nix
-                "${flake}.packages.${pkgs.stdenv.hostPlatform.system}.nvim.options";
-            };
-          };
-      };
+            enable = true;
+            packageFallback = true;
+          }
+          // server
+        )
+        {
+          bashls = { };
 
-      pyright = {
-        enable = true;
+          cssls = { };
 
-        settings = {
-          pyright = {
-            # Disable Pyright's import organizer in favor of Ruff
-            disableOrganizeImports = true;
+          djlsp = {
+            # It isn't in nixpkgs, so it must be on PATH
+            package = null;
+
+            # Only Django templates, not plain HTML
+            filetypes = [ "htmldjango" ];
           };
+
+          docker_language_server.extraOptions.init_options.telemetry = "off";
+
+          # Nixvim has no default package for it
+          expert.package = pkgs.beamPackages.expert;
+
+          # Only prose, because typos checks the code
+          harper_ls.filetypes = [
+            "gitcommit"
+            "markdown"
+          ];
+
+          html.filetypes = [
+            "html"
+            "htmldjango"
+          ];
+
+          jsonls = { };
+
+          just = { };
+
+          lua_ls = { };
+
+          marksman = { };
+
+          nginx_language_server = { };
+
+          # The default, `<nixpkgs>`, depends on NIX_PATH, which isn't set
+          # everywhere. A project can override it in `.nvim.lua`.
+          nixd.settings.nixpkgs.expr = "import ${self.inputs.nixpkgs} { }";
+
+          oxlint = { };
+
+          ruff = {
+            # Disable Ruff's hover in favor of ty
+            onAttach.function =
+              # Lua
+              ''
+                client.server_capabilities.hoverProvider = false
+              '';
+          };
+
+          # They must match the Rust toolchain on PATH
+          rust_analyzer = {
+            installCargo = false;
+            installRustc = false;
+            package = null;
+          };
+
+          superhtml = {
+            # Use only its diagnostics, because html covers the rest
+            onAttach.function =
+              # Lua
+              ''
+                client.server_capabilities = {
+                  textDocumentSync = client.server_capabilities.textDocumentSync,
+                }
+              '';
+          };
+
+          tailwindcss.filetypes = [
+            "css"
+            "elixir"
+            "heex"
+            "html"
+            "htmldjango"
+            "javascript"
+            "javascriptreact"
+            "scss"
+            "typescript"
+            "typescriptreact"
+          ];
+
+          tombi = { };
+
+          ty = { };
+
+          typos_lsp = {
+            # Disable typos LSP in help pages, and in prose that harper_ls checks
+            onAttach.function =
+              # Lua
+              ''
+                -- Use schedule to make sure that a file type is already set
+                vim.schedule(function()
+                  local filetype = vim.bo[bufnr].filetype
+                  if vim.list_contains({"gitcommit", "help", "markdown"}, filetype) then
+                    vim.lsp.buf_detach_client(bufnr, client.id)
+                    return
+                  end
+                end)
+              '';
+          };
+
+          vtsls.settings.vtsls.autoUseWorkspaceTsdk = true;
+
+          yamlls = { };
+
+          # It must match the Zig release on PATH
+          zls.package = null;
         };
-      };
-
-      ruff = {
-        enable = true;
-
-        # Disable Ruff's hover in favor of Pyright
-        onAttach.function =
-          # Lua
-          ''
-            client.server_capabilities.hoverProvider = false
-          '';
-      };
-
-      typos_lsp = {
-        enable = true;
-
-        # Render typos as warnings
-        extraOptions.init_options.diagnosticSeverity = "Warning";
-
-        # Disable typos LSP in help pages
-        onAttach.function =
-          # Lua
-          ''
-            -- Use schedule to make sure that a file type is already set
-            vim.schedule(function()
-              if vim.bo[bufnr].filetype == "help" then
-                vim.lsp.buf_detach_client(bufnr, client.id)
-                return
-              end
-            end)
-          '';
-      };
-    };
   };
+
+  # bashls runs shellcheck from PATH
+  extraPackagesAfter = [ pkgs.shellcheck ];
+
+  # Neovim has no Compose file type, which docker_language_server needs
+  filetype.filename = lib.genAttrs [
+    "compose.yaml"
+    "compose.yml"
+    "docker-compose.yaml"
+    "docker-compose.yml"
+  ] (_: "yaml.docker-compose");
 
   # Global mappings (available also if there is no LS attached)
   keymaps = [

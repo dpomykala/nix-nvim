@@ -23,42 +23,47 @@ in
           if vim.g.autoformat_disable or vim.b[bufnr].autoformat_disable then
             return
           end
-          -- FIXME: Increase timeout (e.g. for prettier 500 ms is not enough)?
-          return {timeout_ms = 500} -- Default: 1000
+          return {}
         end
       '';
 
       # NOTE: LSP formatting is used for some languages (e.g. Python)
       formatters_by_ft = {
+        dockerfile = [ "dockerfmt" ];
         just = [ "just" ];
         lua = [ "stylua" ];
-        nix = [ "alejandra" ];
+        nix = [ "nixfmt" ];
       }
-      # File types formatted using prettier
+      # File types formatted using oxfmt
       // genAttrs [
         "css"
-        "html"
+        "graphql"
         "javascript"
         "javascriptreact"
         "json"
+        "jsonc"
         "markdown"
+        "scss"
+        "toml"
         "typescript"
         "typescriptreact"
         "yaml"
-      ] (_: [ "prettier" ])
-      # File types formatted using shellcheck and sh (shfmt)
-      // genAttrs [ "bash" "sh" ] (_: [
-        "shellcheck"
-        "shfmt"
-      ]);
+      ] (_: [ "oxfmt" ])
+      # File types formatted using shfmt
+      // genAttrs [ "bash" "sh" ] (_: [ "shfmt" ]);
+
+      # Without it, dockerfmt drops the final newline
+      formatters.dockerfmt.prepend_args = [ "--newline" ];
     };
   };
 
-  extraPackages = with pkgs; [
-    alejandra
+  # Prefer the formatters on PATH, such as the ones from a dev shell, and use
+  # the bundled ones only when they are missing
+  extraPackagesAfter = with pkgs; [
+    dockerfmt
     just
-    prettier
-    shellcheck
+    nixfmt
+    oxfmt
     shfmt
     stylua
   ];

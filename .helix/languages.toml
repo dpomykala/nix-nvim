@@ -1,0 +1,6 @@
+# nixd completes packages from this flake's locked nixpkgs and the Nixvim
+# options. Helix starts nixd in the project root, so `./.` is this repository.
+# This table replaces the global nixd config, so it repeats `nixpkgs.expr`.
+[language-server.nixd.config.nixd]
+nixpkgs.expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs { }"
+options.nixvim.expr = "(builtins.getFlake (toString ./.)).packages.${builtins.currentSystem}.default.options"
