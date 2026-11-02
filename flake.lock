@@ -151,7 +151,8 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
-        "snacks-nvim": "snacks-nvim"
+        "snacks-nvim": "snacks-nvim",
+        "tree-sitter-kulala-http": "tree-sitter-kulala-http"
       }
     },
     "snacks-nvim": {
@@ -184,6 +185,23 @@
         "owner": "nix-systems",
         "ref": "future-26.11",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-kulala-http": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784902550,
+        "narHash": "sha256-+BtU7xGUwgZeFX21St8YNYCDrOstDzLjQvbedNtbhvU=",
+        "owner": "mistweaverco",
+        "repo": "tree-sitter-kulala-http",
+        "rev": "630e2b8523c775ba866564c2b4ad88d649a56c00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mistweaverco",
+        "repo": "tree-sitter-kulala-http",
+        "rev": "630e2b8523c775ba866564c2b4ad88d649a56c00",
         "type": "github"
       }
     }
