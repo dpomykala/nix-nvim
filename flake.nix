@@ -80,8 +80,12 @@
         {
           default = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              fzf
+              jq
               just
               nixfmt-tree
+              oxfmt
+              statix
             ];
           };
         }
