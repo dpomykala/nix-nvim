@@ -38,6 +38,9 @@
 
         behaviour = {
           # auto_suggestions = true;
+
+          # Ask before each tool runs, such as a shell command or a file edit
+          auto_approve_tool_permissions = false;
         };
 
         provider = "openrouter";
