@@ -10,7 +10,6 @@ _: {
     ./indentscope.nix
     ./map.nix
     ./operators.nix
-    # ./sessions.nix
     ./statusline.nix
     ./surround.nix
   ];

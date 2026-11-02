@@ -7,7 +7,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -36,11 +35,6 @@
           "buffer"
         ];
 
-        per_filetype = {
-          # Provided by codecompanion.nvim
-          codecompanion = [ "codecompanion" ];
-        };
-
         providers = {
           avante = lib.mkIf config.plugins.avante.enable {
             module = "blink-cmp-avante";
@@ -54,8 +48,6 @@
     };
   };
 
-  extraPlugins = lib.optionals config.plugins.avante.enable [
-    # https://github.com/Kaiser-Yang/blink-cmp-avante
-    pkgs.vimPlugins.blink-cmp-avante
-  ];
+  # https://github.com/Kaiser-Yang/blink-cmp-avante
+  plugins.blink-cmp-avante.enable = config.plugins.avante.enable;
 }

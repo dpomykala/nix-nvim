@@ -44,27 +44,24 @@
       zoxide.confirm = "load_persistence_session";
     };
 
-    win.input.keys =
-      let
-        inherit (lib.nixvim) toRawKeys;
-      in
-      {
-        # NOTE: Default history keymaps <C-Down>/<C-Up> conflict with macOS shortcuts
-        "<c-i>" = {
-          __unkeyed-1 = "history_forward";
-          mode = [
-            "i"
-            "n"
-          ];
-        };
-        "<c-o>" = {
-          __unkeyed-1 = "history_back";
-          mode = [
-            "i"
-            "n"
-          ];
-        };
+    win.input.keys = {
+      # NOTE: Default history keymaps <C-Down>/<C-Up> conflict with macOS
+      # shortcuts
+      "<c-i>" = {
+        __unkeyed-1 = "history_forward";
+        mode = [
+          "i"
+          "n"
+        ];
       };
+      "<c-o>" = {
+        __unkeyed-1 = "history_back";
+        mode = [
+          "i"
+          "n"
+        ];
+      };
+    };
   };
 
   # NOTE: Some picker keymaps may be defined in other places (e.g. LSP config)

@@ -13,9 +13,11 @@ _: {
 
       file_types = [
         "Avante"
-        "codecompanion"
         "markdown"
       ];
+
+      # No LaTeX parser or converter is installed, so it can't render anyway
+      latex.enabled = false;
     };
   };
 }

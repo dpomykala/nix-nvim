@@ -26,7 +26,7 @@
     }))
 
     {
-      # avante sends its LLM requests with curl, and so does codecompanion
+      # avante sends its LLM requests with curl
       curl.enable = true;
 
       # Snacks pickers for files, projects, and explorer search, and avante.

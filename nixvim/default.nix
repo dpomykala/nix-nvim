@@ -27,6 +27,5 @@
   # Apply overlays for pkgs used by NixVim
   config.nixpkgs.overlays = [
     self.overlays.neovim-nightly
-    self.overlays.snacks-nvim-main
   ];
 }

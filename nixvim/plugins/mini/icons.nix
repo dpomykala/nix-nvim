@@ -14,7 +14,6 @@
 
     filetype = {
       "text.kulala_ui" = lib.mkIf config.plugins.kulala.enable { glyph = "🐼"; };
-      "codecompanion" = lib.mkIf config.plugins.codecompanion.enable { glyph = " "; };
     };
   };
 }

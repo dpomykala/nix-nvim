@@ -7,11 +7,6 @@
     nixvim.url = "github:nix-community/nixvim";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-    snacks-nvim = {
-      url = "github:folke/snacks.nvim";
-      flake = false;
-    };
-
     # The kulala.nvim grammar, pinned to the revision that kulala expects. The
     # build fails when they differ, see `nixvim/plugins/kulala.nix`.
     tree-sitter-kulala-http = {
