@@ -180,6 +180,14 @@ in
           # Nixvim has no default package for it
           expert.package = pkgs.beamPackages.expert;
 
+          # It runs golangci-lint from PATH
+          golangci_lint_ls = { };
+
+          # It must match the Go toolchain on PATH
+          gopls.package = null;
+
+          graphql = { };
+
           # Only prose, because typos checks the code
           harper_ls.config.filetypes = [
             "gitcommit"
