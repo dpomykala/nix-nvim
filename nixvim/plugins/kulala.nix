@@ -15,6 +15,9 @@
     };
   };
 
+  # kulala fetches its tree-sitter grammar and builds the parser with it
+  dependencies.tree-sitter.enable = true;
+
   extraPackages = with pkgs; [
     curl
     jq
