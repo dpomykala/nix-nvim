@@ -2,6 +2,7 @@
 {
   imports = [
     ./colorschemes.nix
+    ./dependencies.nix
     ./diagnostics.nix
     ./ftplugins.nix
     ./keymaps.nix
