@@ -4,96 +4,68 @@
   ...
 }:
 {
-  plugins.snacks.settings.picker =
-    let
-      deltaFeatures =
-        if config.colorschemes.catppuccin.enable then
-          "catppuccin-${config.colorschemes.catppuccin.settings.flavour}"
-        else
-          "";
-    in
-    {
-      enabled = true;
+  plugins.snacks.settings.picker = {
+    enabled = true;
 
-      actions = lib.optionalAttrs config.plugins.persistence.enable {
-        # Custom picker action to load session using persistence.nvim
-        # This is a modified version of the `load_session` action from snacks.picker
-        load_persistence_session.__raw = ''
-          function(picker, item)
-            -- Original implementation
-            -- https://github.com/folke/snacks.nvim/blob/bc0630e43be5699bb94dadc302c0d21615421d93/lua/snacks/picker/actions.lua#L544-L561
-            picker:close()
-            if not item then
-              return
-            end
-            local dir = item.file
-            local session_loaded = false
-            vim.api.nvim_create_autocmd("SessionLoadPost", {
-              once = true,
-              callback = function()
-                session_loaded = true
-              end,
-            })
-            vim.defer_fn(function()
-              if not session_loaded then
-                Snacks.picker.files()
-              end
-            end, 100)
-            vim.fn.chdir(dir)
-
-            -- Modified part - try to restore session using persistence.nvim
-            require("persistence").load()
+    actions = lib.optionalAttrs config.plugins.persistence.enable {
+      # Custom picker action to load session using persistence.nvim
+      # This is a modified version of the `load_session` action from snacks.picker
+      load_persistence_session.__raw = ''
+        function(picker, item)
+          -- Original implementation
+          -- https://github.com/folke/snacks.nvim/blob/bc0630e43be5699bb94dadc302c0d21615421d93/lua/snacks/picker/actions.lua#L544-L561
+          picker:close()
+          if not item then
+            return
           end
-        '';
-      };
+          local dir = item.file
+          local session_loaded = false
+          vim.api.nvim_create_autocmd("SessionLoadPost", {
+            once = true,
+            callback = function()
+              session_loaded = true
+            end,
+          })
+          vim.defer_fn(function()
+            if not session_loaded then
+              Snacks.picker.files()
+            end
+          end, 100)
+          vim.fn.chdir(dir)
 
-      # Use delta for previewing diffs and Git output
-      # NOTE: Requires delta to be installed and configured
-      previewers = {
-        diff = {
-          builtin = false;
-          cmd = [
-            "delta"
-            "--features"
-            deltaFeatures
-          ];
-        };
-        git = {
-          builtin = false;
-          args = [
-            "-c"
-            "delta.line-numbers=false"
-          ];
-        };
-      };
-
-      sources = lib.optionalAttrs config.plugins.persistence.enable {
-        projects.confirm = "load_persistence_session";
-        zoxide.confirm = "load_persistence_session";
-      };
-
-      win.input.keys =
-        let
-          inherit (lib.nixvim) toRawKeys;
-        in
-        {
-          # NOTE: Default history keymaps <C-Down>/<C-Up> conflict with macOS shortcuts
-          "<c-i>" = {
-            __unkeyed-1 = "history_forward";
-            mode = [
-              "i"
-              "n"
-            ];
-          };
-          "<c-o>" = {
-            __unkeyed-1 = "history_back";
-            mode = [
-              "i"
-              "n"
-            ];
-          };
-        };
+          -- Modified part - try to restore session using persistence.nvim
+          require("persistence").load()
+        end
+      '';
     };
+
+    sources = lib.optionalAttrs config.plugins.persistence.enable {
+      projects.confirm = "load_persistence_session";
+      zoxide.confirm = "load_persistence_session";
+    };
+
+    win.input.keys =
+      let
+        inherit (lib.nixvim) toRawKeys;
+      in
+      {
+        # NOTE: Default history keymaps <C-Down>/<C-Up> conflict with macOS shortcuts
+        "<c-i>" = {
+          __unkeyed-1 = "history_forward";
+          mode = [
+            "i"
+            "n"
+          ];
+        };
+        "<c-o>" = {
+          __unkeyed-1 = "history_back";
+          mode = [
+            "i"
+            "n"
+          ];
+        };
+      };
+  };
 
   # NOTE: Some picker keymaps may be defined in other places (e.g. LSP config)
   keymaps =
@@ -231,6 +203,10 @@
         cmd = "lua Snacks.picker.grep_word()";
         desc = "Grep for word(s)";
       })
+      /*
+        Needs zoxide on the host. A bundled zoxide would have an empty
+        database, because only the zoxide hook in the shell adds directories.
+      */
       (nCmdMap {
         key = "<Leader>fz";
         cmd = "lua Snacks.picker.zoxide()";
