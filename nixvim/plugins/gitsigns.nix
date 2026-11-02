@@ -30,17 +30,16 @@ _: {
           map('n', ']H', function() gitsigns.nav_hunk('last') end, 'Last hunk')
           map('n', '[H', function() gitsigns.nav_hunk('first') end, 'First hunk')
 
-          map('n', 'ghs', gitsigns.stage_hunk, 'Stage hunk')
+          -- Unstages the hunk when it is already staged
+          map('n', 'ghs', gitsigns.stage_hunk, 'Stage/unstage hunk')
           map('v', 'ghs', function()
             gitsigns.stage_hunk({vim.fn.line('.'), vim.fn.line('v')})
-          end, 'Stage hunk')
+          end, 'Stage/unstage hunk')
 
           map('n', 'ghr', gitsigns.reset_hunk, 'Reset hunk')
           map('v', 'ghr', function()
             gitsigns.reset_hunk({vim.fn.line('.'), vim.fn.line('v')})
           end, 'Reset hunk')
-
-          map('n', 'ghu', gitsigns.undo_stage_hunk, 'Unstage hunk')
 
           map('n', 'ghS', gitsigns.stage_buffer, 'Stage buffer')
           map('n', 'ghR', gitsigns.reset_buffer, 'Reset buffer')
@@ -55,7 +54,6 @@ _: {
           map('n', 'ghD', function() gitsigns.diffthis('~') end, 'Diff to parent (~)')
 
           map('n', '\\gb', gitsigns.toggle_current_line_blame, 'Toggle blame')
-          map('n', '\\gd', gitsigns.toggle_deleted, 'Toggle deleted')
           map('n', '\\gw', gitsigns.toggle_word_diff, 'Toggle word diff')
 
           -- Text object
