@@ -82,6 +82,7 @@
               fzf
               jq
               just
+              nixfmt
               nixfmt-tree
               oxfmt
               statix

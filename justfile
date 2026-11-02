@@ -52,14 +52,21 @@ fmt: (_requires "oxfmt")
     nix fmt .
     oxfmt
 
+# Check the formatting without changing files. treefmt behind `nix fmt` has no
+# check-only mode, so this runs nixfmt directly.
+_fmt-check: (_requires "nixfmt") (_requires "oxfmt")
+    just --fmt --check
+    git ls-files -z '*.nix' | xargs -0 nixfmt --check
+    oxfmt --check
+
 # Lint Nix files
 [group("Helpers")]
 lint: (_requires "statix")
     statix check
 
-# Evaluate the flake outputs for all systems
+# Check the formatting, lint, and evaluate the flake for all systems
 [group("Helpers")]
-check:
+check: _fmt-check lint
     nix flake check --all-systems
 
 # Print the generated init.lua, optionally of a variant
