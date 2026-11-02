@@ -55,6 +55,8 @@ _: {
     splitright = true;
     # Allow the cursor to move past the EOL in the visual block mode
     virtualedit = "block";
+    # Use rounded borders for floating windows that don't set their own
+    winborder = "rounded";
 
     # INDENTATION {{{
 

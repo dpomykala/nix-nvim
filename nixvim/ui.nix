@@ -6,9 +6,6 @@
   ui2 is still experimental, see `:help ui2`.
 */
 { config, lib, ... }:
-let
-  inherit (lib.custom.nixvim) nMap;
-in
 lib.mkIf (!config.plugins.noice.enable) {
   # Load it before the plugins, so that it also shows their startup messages
   extraConfigLuaPre = ''
@@ -44,14 +41,5 @@ lib.mkIf (!config.plugins.noice.enable) {
       '';
       desc = "Show LSP progress as progress messages";
     }
-  ];
-
-  # Hover docs have no border by default
-  lsp.keymaps = [
-    (nMap {
-      key = "K";
-      action.__raw = "function() vim.lsp.buf.hover({ border = 'rounded' }) end";
-      desc = "Hover (LSP)";
-    })
   ];
 }

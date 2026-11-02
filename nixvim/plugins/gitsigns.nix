@@ -60,8 +60,6 @@ _: {
           map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, 'Select hunk')
         end
       '';
-
-      preview_config.border = "rounded";
     };
   };
 }
