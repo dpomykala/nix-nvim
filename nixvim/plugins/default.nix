@@ -21,6 +21,5 @@ _: {
 
   plugins = {
     friendly-snippets.enable = true;
-    neoconf.enable = true;
   };
 }
