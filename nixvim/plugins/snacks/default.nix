@@ -16,7 +16,7 @@ _: {
 
     settings = {
       input.enabled = true;
-      # NOTE: Used by noice.nvim
+      # Shows `vim.notify` messages as toasts
       notifier.enabled = true;
       statuscolumn.enabled = true;
     };

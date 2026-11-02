@@ -10,7 +10,8 @@ _: {
     ./kulala.nix
     ./lsp.nix
     ./mini
-    ./noice.nix
+    # Replaced by ui2, see `../ui.nix`. Uncomment to restore noice.nvim.
+    # ./noice.nix
     ./persistence.nix
     ./quicker.nix
     ./render-markdown.nix

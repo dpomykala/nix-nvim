@@ -8,6 +8,7 @@
     ./keymaps.nix
     ./options.nix
     ./plugins
+    ./ui.nix
   ];
 
   options.languageTools = lib.mkOption {
