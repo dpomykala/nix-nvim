@@ -10,7 +10,7 @@
     # The kulala.nvim grammar, pinned to the revision that kulala expects. The
     # build fails when they differ, see `nixvim/plugins/kulala.nix`.
     tree-sitter-kulala-http = {
-      url = "github:mistweaverco/tree-sitter-kulala-http/630e2b8523c775ba866564c2b4ad88d649a56c00";
+      url = "github:dont-be-evil-company/tree-sitter-kulala-http/630e2b8523c775ba866564c2b4ad88d649a56c00";
       flake = false;
     };
   };

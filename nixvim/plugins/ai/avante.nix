@@ -2,7 +2,7 @@
   avante.nvim - designed to emulate the behaviour of the Cursor AI IDE.
 
   https://nix-community.github.io/nixvim/plugins/avante
-  https://github.com/yetone/avante.nvim
+  https://github.com/avante-corp/avante.nvim
 */
 {
   config,

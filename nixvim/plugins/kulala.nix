@@ -2,7 +2,7 @@
   kulala.nvim - A fully-featured REST Client Interface for Neovim.
 
   https://nix-community.github.io/nixvim/plugins/kulala/
-  https://github.com/mistweaverco/kulala.nvim
+  https://github.com/dont-be-evil-company/kulala.nvim
 
   TODO: Use also kulala-fmt and kulala-ls?
 */

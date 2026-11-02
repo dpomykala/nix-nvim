@@ -176,13 +176,13 @@
       "locked": {
         "lastModified": 1784902550,
         "narHash": "sha256-+BtU7xGUwgZeFX21St8YNYCDrOstDzLjQvbedNtbhvU=",
-        "owner": "mistweaverco",
+        "owner": "dont-be-evil-company",
         "repo": "tree-sitter-kulala-http",
         "rev": "630e2b8523c775ba866564c2b4ad88d649a56c00",
         "type": "github"
       },
       "original": {
-        "owner": "mistweaverco",
+        "owner": "dont-be-evil-company",
         "repo": "tree-sitter-kulala-http",
         "rev": "630e2b8523c775ba866564c2b4ad88d649a56c00",
         "type": "github"
