@@ -25,12 +25,18 @@ lib.mkIf (!config.plugins.noice.enable) {
       event = "LspProgress";
       callback.__raw = ''
         function(ev)
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
           local value = ev.data.params.value
+          local title = value.title
+          if client then
+            title = ('%s: %s'):format(client.name, title)
+          end
           vim.api.nvim_echo({ { value.message or 'done' } }, false, {
-            id = 'lsp.' .. ev.data.params.token,
+            -- Each server numbers its own tokens, so they can repeat
+            id = ('lsp.%d.%s'):format(ev.data.client_id, ev.data.params.token),
             kind = 'progress',
             source = 'vim.lsp',
-            title = value.title,
+            title = title,
             status = value.kind ~= 'end' and 'running' or 'success',
             percent = value.percentage,
           })
