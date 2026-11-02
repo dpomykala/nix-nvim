@@ -4,12 +4,7 @@
   https://nix-community.github.io/nixvim/plugins/codecompanion
   https://github.com/olimorris/codecompanion.nvim
 */
-{
-  lib,
-  pkgs,
-  ...
-}:
-{
+{ lib, ... }: {
   plugins.codecompanion = {
     enable = true;
 
@@ -72,8 +67,6 @@
       };
     };
   };
-
-  extraPackages = with pkgs; [ curl ];
 
   keymaps =
     let

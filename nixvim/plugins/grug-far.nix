@@ -14,10 +14,8 @@
     enable = true;
   };
 
-  extraPackages = with pkgs; [
-    ast-grep
-    ripgrep
-  ];
+  # For the astgrep engine. Nixvim has no dependency option for it.
+  extraPackagesAfter = [ pkgs.ast-grep ];
 
   keymaps =
     let

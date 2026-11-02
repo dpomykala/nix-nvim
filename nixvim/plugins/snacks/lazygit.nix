@@ -1,12 +1,7 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
-{
+{ lib, ... }: {
   plugins.snacks.settings.lazygit.enabled = true;
 
-  extraPackages = with pkgs; [ lazygit ];
+  dependencies.lazygit.enable = true;
 
   keymaps =
     let
