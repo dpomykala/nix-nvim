@@ -115,7 +115,7 @@
             keys = "<Leader>f";
             desc = "+Find";
           }))
-          (lib.optional config.plugins.lsp.enable {
+          (lib.optional config.plugins.lspconfig.enable {
             mode = "n";
             keys = "<Leader>l";
             desc = "+LSP";
@@ -161,7 +161,7 @@
             keys = "gh";
             desc = "+Git hunks";
           }))
-          (lib.optionals config.plugins.lsp.enable (genMiniClueAttrs {
+          (lib.optionals config.plugins.lspconfig.enable (genMiniClueAttrs {
             mode = [
               "n"
               "x"

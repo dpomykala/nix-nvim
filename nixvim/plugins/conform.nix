@@ -13,7 +13,7 @@ in
 
     settings = {
       default_format_opts = {
-        # Try using LSP formatting if no other formatters ara available
+        # Try using LSP formatting if no other formatters are available
         lsp_format = "fallback";
       };
 

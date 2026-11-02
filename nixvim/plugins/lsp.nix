@@ -8,125 +8,147 @@
 let
   inherit (lib.custom.nixvim) hasSnacksModule nCmdMap;
 
+  lspBufMap =
+    {
+      mode ? "n",
+      key,
+      action,
+      desc,
+    }:
+    {
+      inherit key mode;
+      lspBufAction = action;
+      options.desc = desc;
+    };
+
   hasSnacksPicker = hasSnacksModule config "picker";
 in
 {
-  plugins.lsp = {
-    enable = true;
+  plugins.lspconfig.enable = true;
 
-    inlayHints = true;
+  lsp = {
+    inlayHints.enable = true;
 
-    keymaps = {
-      extra = [
-        # Language servers mappings
-        (nCmdMap {
-          key = "<Leader>ll";
-          cmd = "LspLog";
-          desc = "LS logs";
-        })
-        (nCmdMap {
-          key = "<Leader>lr";
-          cmd = "LspRestart";
-          desc = "LS restart";
-        })
-        (nCmdMap {
-          key = "<Leader>lS";
-          cmd = "LspStop";
-          desc = "LS stop";
-        })
-      ]
-      ++ lib.optionals hasSnacksPicker [
-        (nCmdMap {
-          key = "gD";
-          cmd = "lua Snacks.picker.lsp_declarations()";
-          desc = "Goto declaration (LSP)";
-        })
-        (nCmdMap {
-          key = "gd";
-          cmd = "lua Snacks.picker.lsp_definitions()";
-          desc = "Goto definition (LSP)";
-        })
-        (nCmdMap {
-          key = "gli";
-          cmd = "lua Snacks.picker.lsp_implementations()";
-          desc = "Goto implementation";
-        })
-        (nCmdMap {
-          key = "glr";
-          cmd = "lua Snacks.picker.lsp_references()";
-          desc = "References";
-        })
-        (nCmdMap {
-          key = "glS";
-          cmd = "lua Snacks.picker.lsp_workspace_symbols()";
-          desc = "Symbols (workspace)";
-        })
-        (nCmdMap {
-          key = "gls";
-          cmd = "lua Snacks.picker.lsp_symbols()";
-          desc = "Symbols (buffer)";
-        })
-        (nCmdMap {
-          key = "glt";
-          cmd = "lua Snacks.picker.lsp_type_definitions()";
-          desc = "Goto type definition";
-        })
-      ];
+    keymaps = [
+      # Language servers mappings
+      (nCmdMap {
+        key = "<Leader>ll";
+        cmd = "lua vim.cmd.tabnew(vim.lsp.log.get_filename())";
+        desc = "LS logs";
+      })
+      (nCmdMap {
+        key = "<Leader>lr";
+        cmd = "lsp restart";
+        desc = "LS restart";
+      })
+      (nCmdMap {
+        key = "<Leader>lS";
+        cmd = "lsp stop";
+        desc = "LS stop";
+      })
 
-      lspBuf = {
-        # Use signature mappings consistent with `K` for the `hover` action
-        gK = {
-          action = "signature_help";
-          desc = "Signature help (LSP)";
-        };
-        "<C-k>" = {
-          mode = "i";
-          action = "signature_help";
-          desc = "Signature help (LSP)";
-        };
+      # Use signature mappings consistent with `K` for the `hover` action
+      (lspBufMap {
+        key = "gK";
+        action = "signature_help";
+        desc = "Signature help (LSP)";
+      })
+      (lspBufMap {
+        mode = "i";
+        key = "<C-k>";
+        action = "signature_help";
+        desc = "Signature help (LSP)";
+      })
 
-        gla = {
-          action = "code_action";
-          desc = "Actions";
-        };
-        glR = {
-          action = "rename";
-          desc = "Rename";
-        };
-      }
-      // lib.optionalAttrs (!hasSnacksPicker) {
-        gD = {
-          action = "declaration";
-          desc = "Goto declaration (LSP)";
-        };
-        gd = {
-          action = "definition";
-          desc = "Goto definition (LSP)";
-        };
-        gli = {
-          action = "implementation";
-          desc = "Goto implementation";
-        };
-        glr = {
-          action = "references";
-          desc = "References";
-        };
-        glS = {
-          action = "workspace_symbol";
-          desc = "Symbols (workspace)";
-        };
-        gls = {
-          action = "document_symbol";
-          desc = "Symbols (buffer)";
-        };
-        glt = {
-          action = "type_definition";
-          desc = "Goto type definition";
-        };
-      };
-
-      silent = true;
-    };
+      (lspBufMap {
+        key = "gla";
+        action = "code_action";
+        desc = "Actions";
+      })
+      (lspBufMap {
+        key = "glR";
+        action = "rename";
+        desc = "Rename";
+      })
+    ]
+    ++ (
+      if hasSnacksPicker then
+        [
+          (nCmdMap {
+            key = "gD";
+            cmd = "lua Snacks.picker.lsp_declarations()";
+            desc = "Goto declaration (LSP)";
+          })
+          (nCmdMap {
+            key = "gd";
+            cmd = "lua Snacks.picker.lsp_definitions()";
+            desc = "Goto definition (LSP)";
+          })
+          (nCmdMap {
+            key = "gli";
+            cmd = "lua Snacks.picker.lsp_implementations()";
+            desc = "Goto implementation";
+          })
+          (nCmdMap {
+            key = "glr";
+            cmd = "lua Snacks.picker.lsp_references()";
+            desc = "References";
+          })
+          (nCmdMap {
+            key = "glS";
+            cmd = "lua Snacks.picker.lsp_workspace_symbols()";
+            desc = "Symbols (workspace)";
+          })
+          (nCmdMap {
+            key = "gls";
+            cmd = "lua Snacks.picker.lsp_symbols()";
+            desc = "Symbols (buffer)";
+          })
+          (nCmdMap {
+            key = "glt";
+            cmd = "lua Snacks.picker.lsp_type_definitions()";
+            desc = "Goto type definition";
+          })
+        ]
+      else
+        [
+          (lspBufMap {
+            key = "gD";
+            action = "declaration";
+            desc = "Goto declaration (LSP)";
+          })
+          (lspBufMap {
+            key = "gd";
+            action = "definition";
+            desc = "Goto definition (LSP)";
+          })
+          (lspBufMap {
+            key = "gli";
+            action = "implementation";
+            desc = "Goto implementation";
+          })
+          (lspBufMap {
+            key = "glr";
+            action = "references";
+            desc = "References";
+          })
+          (lspBufMap {
+            key = "glS";
+            action = "workspace_symbol";
+            desc = "Symbols (workspace)";
+          })
+          (lspBufMap {
+            key = "gls";
+            action = "document_symbol";
+            desc = "Symbols (buffer)";
+          })
+          (lspBufMap {
+            key = "glt";
+            action = "type_definition";
+            desc = "Goto type definition";
+          })
+        ]
+    );
 
     # Prefer the servers on PATH, such as the ones from a dev shell, and use
     # the bundled ones only when they are missing
@@ -150,21 +172,21 @@ in
             package = null;
 
             # Only Django templates, not plain HTML
-            filetypes = [ "htmldjango" ];
+            config.filetypes = [ "htmldjango" ];
           };
 
-          docker_language_server.extraOptions.init_options.telemetry = "off";
+          docker_language_server.config.init_options.telemetry = "off";
 
           # Nixvim has no default package for it
           expert.package = pkgs.beamPackages.expert;
 
           # Only prose, because typos checks the code
-          harper_ls.filetypes = [
+          harper_ls.config.filetypes = [
             "gitcommit"
             "markdown"
           ];
 
-          html.filetypes = [
+          html.config.filetypes = [
             "html"
             "htmldjango"
           ];
@@ -181,38 +203,36 @@ in
 
           # The default, `<nixpkgs>`, depends on NIX_PATH, which isn't set
           # everywhere. A project can override it in `.nvim.lua`.
-          nixd.settings.nixpkgs.expr = "import ${self.inputs.nixpkgs} { }";
+          nixd.config.settings.nixd.nixpkgs.expr = "import ${self.inputs.nixpkgs} { }";
 
           oxlint = { };
 
-          ruff = {
-            # Disable Ruff's hover in favor of ty
-            onAttach.function =
+          # Disable Ruff's hover in favor of ty
+          ruff.config.on_attach =
+            lib.nixvim.mkRaw
               # Lua
               ''
-                client.server_capabilities.hoverProvider = false
+                function(client)
+                  client.server_capabilities.hoverProvider = false
+                end
               '';
-          };
 
-          # They must match the Rust toolchain on PATH
-          rust_analyzer = {
-            installCargo = false;
-            installRustc = false;
-            package = null;
-          };
+          # It must match the Rust toolchain on PATH
+          rust_analyzer.package = null;
 
-          superhtml = {
-            # Use only its diagnostics, because html covers the rest
-            onAttach.function =
+          # Use only its diagnostics, because html covers the rest
+          superhtml.config.on_attach =
+            lib.nixvim.mkRaw
               # Lua
               ''
-                client.server_capabilities = {
-                  textDocumentSync = client.server_capabilities.textDocumentSync,
-                }
+                function(client)
+                  client.server_capabilities = {
+                    textDocumentSync = client.server_capabilities.textDocumentSync,
+                  }
+                end
               '';
-          };
 
-          tailwindcss.filetypes = [
+          tailwindcss.config.filetypes = [
             "css"
             "elixir"
             "heex"
@@ -229,23 +249,23 @@ in
 
           ty = { };
 
-          typos_lsp = {
-            # Disable typos LSP in help pages, and in prose that harper_ls checks
-            onAttach.function =
+          # Disable typos LSP in help pages, and in prose that harper_ls checks
+          typos_lsp.config.on_attach =
+            lib.nixvim.mkRaw
               # Lua
               ''
-                -- Use schedule to make sure that a file type is already set
-                vim.schedule(function()
-                  local filetype = vim.bo[bufnr].filetype
-                  if vim.list_contains({"gitcommit", "help", "markdown"}, filetype) then
-                    vim.lsp.buf_detach_client(bufnr, client.id)
-                    return
-                  end
-                end)
+                function(client, bufnr)
+                  -- Use schedule to make sure that a file type is already set
+                  vim.schedule(function()
+                    local filetype = vim.bo[bufnr].filetype
+                    if vim.list_contains({"gitcommit", "help", "markdown"}, filetype) then
+                      vim.lsp.buf_detach_client(bufnr, client.id)
+                    end
+                  end)
+                end
               '';
-          };
 
-          vtsls.settings.vtsls.autoUseWorkspaceTsdk = true;
+          vtsls.config.settings.vtsls.autoUseWorkspaceTsdk = true;
 
           yamlls = { };
 
@@ -270,12 +290,12 @@ in
     # Language servers mappings
     (nCmdMap {
       key = "<Leader>li";
-      cmd = "check lspconfig";
+      cmd = "checkhealth vim.lsp";
       desc = "LS info";
     })
     (nCmdMap {
       key = "<Leader>ls";
-      cmd = "LspStart";
+      cmd = "lsp enable";
       desc = "LS start";
     })
   ];
