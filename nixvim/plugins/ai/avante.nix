@@ -7,16 +7,24 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
   plugins.avante = {
     enable = true;
 
+    # nixpkgs adds dressing.nvim, which is archived. Its `vim.ui.input` and
+    # `vim.ui.select` replace the Snacks ones, and avante works without it.
+    package = pkgs.vimPlugins.avante-nvim.overrideAttrs (old: {
+      dependencies = lib.remove pkgs.vimPlugins.dressing-nvim old.dependencies;
+    });
+
     settings =
       let
         inherit (lib.custom.nixvim) hasSnacksModule;
 
+        hasSnacksInput = hasSnacksModule config "input";
         hasSnacksPicker = hasSnacksModule config "picker";
 
         openrouter_params = {
@@ -46,8 +54,11 @@
           };
         };
       }
+      // lib.optionalAttrs hasSnacksInput {
+        input.provider = "snacks";
+      }
       // lib.optionalAttrs hasSnacksPicker {
-        file_selector.provider = "snacks";
+        selector.provider = "snacks";
       };
   };
 }
