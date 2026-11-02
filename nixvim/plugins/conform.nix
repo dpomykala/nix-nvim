@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -7,7 +8,7 @@ let
   inherit (lib) genAttrs;
   inherit (lib.custom.nixvim) nCmdMap nxCmdMap;
 in
-{
+lib.mkIf (config.languageTools != "none") {
   plugins.conform-nvim = {
     enable = true;
 
@@ -59,14 +60,17 @@ in
 
   # Prefer the formatters on PATH, such as the ones from a dev shell, and use
   # the bundled ones only when they are missing
-  extraPackagesAfter = with pkgs; [
-    dockerfmt
-    just
-    nixfmt
-    oxfmt
-    shfmt
-    stylua
-  ];
+  extraPackagesAfter = lib.mkIf (config.languageTools == "bundled") (
+    with pkgs;
+    [
+      dockerfmt
+      just
+      nixfmt
+      oxfmt
+      shfmt
+      stylua
+    ]
+  );
 
   keymaps = [
     (nCmdMap {

@@ -23,7 +23,7 @@ let
 
   hasSnacksPicker = hasSnacksModule config "picker";
 in
-{
+lib.mkIf (config.languageTools != "none") {
   plugins.lspconfig.enable = true;
 
   lsp = {
@@ -161,6 +161,7 @@ in
             packageFallback = true;
           }
           // server
+          // lib.optionalAttrs (config.languageTools == "external") { package = null; }
         )
         {
           bashls = { };
@@ -283,7 +284,7 @@ in
   };
 
   # bashls runs shellcheck from PATH
-  extraPackagesAfter = [ pkgs.shellcheck ];
+  extraPackagesAfter = lib.mkIf (config.languageTools == "bundled") [ pkgs.shellcheck ];
 
   # Neovim has no Compose file type, which docker_language_server needs
   filetype.filename = lib.genAttrs [

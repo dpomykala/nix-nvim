@@ -38,21 +38,34 @@
       libForNixvim = lib.extend nixvim.lib.overlay;
     in
     {
-      packages = forAllSystems (system: {
-        # Run NixVim as the default program for this flake with `nix run`
-        default = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-          inherit system;
+      packages = forAllSystems (
+        system:
+        let
+          nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+            inherit system;
 
-          extraSpecialArgs = {
-            inherit self;
+            extraSpecialArgs = {
+              inherit self;
 
-            # Use the custom (extended) lib
-            lib = libForNixvim;
+              # Use the custom (extended) lib
+              lib = libForNixvim;
+            };
+
+            module = import ./nixvim;
           };
+        in
+        {
+          # Run NixVim as the default program for this flake with `nix run`. It
+          # bundles the language servers and formatters, so it works anywhere.
+          default = nvim;
 
-          module = import ./nixvim;
-        };
-      });
+          # Uses only the language servers and formatters on PATH
+          external = nvim.extend { languageTools = "external"; };
+
+          # Sets up no language servers or formatters
+          minimal = nvim.extend { languageTools = "none"; };
+        }
+      );
 
       # TODO: Add checks for NixVim?
 
