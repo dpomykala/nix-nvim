@@ -17,7 +17,13 @@
       csv
       dockerfile
       editorconfig
+      elixir
+      gitcommit
       gitignore
+      go
+      gomod
+      graphql
+      heex
       html
       htmldjango
       http
@@ -32,12 +38,16 @@
       nix
       python
       regex
+      rust
+      scss
       sql
       toml
+      tsx
       typescript
       vim
       xml
       yaml
+      zig
     ];
   };
 
