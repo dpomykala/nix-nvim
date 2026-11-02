@@ -34,7 +34,7 @@
         };
       in
       {
-        auto_suggestions_provider = "openrouter_gpt41_mini";
+        auto_suggestions_provider = "openrouter_fast";
 
         behaviour = {
           # auto_suggestions = true;
@@ -47,10 +47,10 @@
             extra_request_body = {
               max_tokens = 32768;
             };
-            model = "openai/gpt-4.1";
+            model = "openai/gpt-6.1-sol";
           };
-          openrouter_gpt41_mini = openrouter_params // {
-            model = "openai/gpt-4.1-mini";
+          openrouter_fast = openrouter_params // {
+            model = "openai/gpt-6-luna";
           };
         };
       }
