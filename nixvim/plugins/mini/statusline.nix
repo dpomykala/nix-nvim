@@ -12,7 +12,7 @@ _: {
         local location = MiniStatusline.section_location({trunc_width = 75})
         local search = MiniStatusline.section_searchcount({trunc_width = 75})
 
-        -- Messages in the command line can hide the "recording" text there
+        -- ui2 doesn't show the "recording" text while 'cmdheight' is 0
         local register = vim.fn.reg_recording()
         local recording = register ~= "" and "recording @" .. register or ""
 
@@ -23,6 +23,7 @@ _: {
           {hl = "MiniStatuslineFilename", strings = {filename}},
           "%=", -- End left alignment
           {hl = "MiniStatuslineFilename", strings = {recording}},
+          "%S ", -- Pending keys, when 'showcmdloc' is "statusline"
           {hl = "MiniStatuslineFileinfo", strings = {fileinfo}},
           {hl = mode_hl, strings = {search, location}},
         })

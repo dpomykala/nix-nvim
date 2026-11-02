@@ -10,11 +10,19 @@ lib.mkIf (!config.plugins.noice.enable) {
   # Load it before the plugins, so that it also shows their startup messages
   extraConfigLuaPre = ''
     require('vim._core.ui2').enable({
-      -- Show progress in a floating window above the statusline, and other
-      -- messages in the command line
-      msg = { targets = { default = 'cmd', progress = 'msg' } },
+      -- Show messages in a floating window above the statusline, because the
+      -- command line is hidden. Open command listings, such as `:ls`, in the
+      -- pager, so that they stay until closed with `q`.
+      msg = { targets = { default = 'msg', list_cmd = 'pager' } },
     })
   '';
+
+  opts = {
+    # ui2 shows the command line only while a command is typed
+    cmdheight = 0;
+    # ui2 can't show the pending keys while 'cmdheight' is 0
+    showcmdloc = "statusline";
+  };
 
   # Neovim tracks LSP progress but doesn't show it
   autoCmd = [
