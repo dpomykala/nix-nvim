@@ -1,7 +1,5 @@
 # just: https://just.systems
 
-set unstable
-
 # List all recipes
 _default:
     @just --list --unsorted --justfile {{ justfile() }}
@@ -23,7 +21,7 @@ run variant="default":
 # List all flake inputs
 [group("Inputs")]
 inputs: (_requires "jq")
-    @nix flake metadata --json | jq '.locks.nodes.root.inputs | keys[]' | tr -d '"'
+    @nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[]'
 
 # Update the lock file and commit (optionally provide input(s))
 [group("Inputs")]
@@ -50,7 +48,7 @@ dev:
 # Format all files
 [group("Helpers")]
 fmt: (_requires "oxfmt")
-    just --unstable --fmt
+    just --fmt
     nix fmt .
     oxfmt
 
