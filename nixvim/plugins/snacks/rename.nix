@@ -1,5 +1,5 @@
 { lib, ... }: {
-  plugins.snacks.settings.rename.enable = true;
+  plugins.snacks.settings.rename.enabled = true;
 
   autoCmd = [
     {
