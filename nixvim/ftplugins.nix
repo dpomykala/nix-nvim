@@ -1,11 +1,11 @@
 # Custom ftplugins with configuration for specific file types.
 _: {
   files = {
+    # NOTE: The default ftplugin for gitcommit already sets `textwidth=72`
     "after/ftplugin/gitcommit.lua" = {
       localOpts = {
         colorcolumn = "51,73";
         spell = true;
-        textwidth = 72;
       };
     };
 

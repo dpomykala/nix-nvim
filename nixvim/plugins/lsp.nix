@@ -33,7 +33,7 @@ lib.mkIf (config.languageTools != "none") {
       # Language servers mappings
       (nCmdMap {
         key = "<Leader>ll";
-        cmd = "lua vim.cmd.tabnew(vim.lsp.log.get_filename())";
+        cmd = "tab log lsp";
         desc = "LS logs";
       })
       (nCmdMap {
