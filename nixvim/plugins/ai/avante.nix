@@ -35,18 +35,6 @@
         provider = "openrouter";
 
         providers = {
-          groq = {
-            __inherited_from = "openai";
-            api_key_name = "GROQ_API_KEY";
-            endpoint = "https://api.groq.com/openai/v1/";
-            extra_request_body = {
-              temperature = 0.6;
-            };
-            max_tokens = 32768;
-            model = "deepseek-r1-distill-qwen-32b";
-            # model = "llama-3.3-70b-versatile";
-          };
-
           openrouter = openrouter_params // {
             extra_request_body = {
               max_tokens = 32768;
