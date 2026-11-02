@@ -7,21 +7,9 @@
   plugins.treesitter = {
     enable = true;
 
-    settings = {
-      highlight.enable = true;
-
-      incremental_selection = {
-        enable = true;
-        keymaps = {
-          init_selection = "<CR>";
-          node_decremental = "<BS>";
-          node_incremental = "<CR>";
-          scope_incremental = false;
-        };
-      };
-
-      indent.enable = true;
-    };
+    highlight.enable = true;
+    indent.enable = true;
+    folding.enable = true;
 
     grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
       bash
@@ -51,16 +39,5 @@
       xml
       yaml
     ];
-  };
-
-  /*
-    Configure folding manually as the `plugins.treesitter.folding` option
-    sets `foldexpr` to `nvim_treesitter#foldexpr()` which does not work
-  */
-  opts = {
-    # Use Treesitter based folding
-    foldexpr = "v:lua.vim.treesitter.foldexpr()";
-    # Use `foldexpr` for calculating fold levels
-    foldmethod = "expr";
   };
 }
